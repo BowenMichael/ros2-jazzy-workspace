@@ -1,0 +1,20 @@
+FROM osrf/ros:jazzy-desktop
+
+# Install basic GUI dependencies
+RUN apt-get update && apt-get install -y \
+    mesa-utils \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set up the same environment variables WSLg uses
+ENV DISPLAY=:0
+ENV WAYLAND_DISPLAY=wayland-0
+ENV XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir
+ENV PULSE_SERVER=unix:/mnt/wslg/PulseServer
+
+# 3. Automatically source ROS 2 for every new bash shell
+# This is the "Magic Line" that fixes your 'command not found' error
+RUN echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
+RUN echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.bashrc
+
+# Standard ROS entrypoint
+CMD ["bash"]

@@ -1,0 +1,33 @@
+{
+    "name": "ROS 2 Jazzy (AMD GPU)",
+    "build": {
+        "dockerfile": "../Dockerfile",
+        "context": ".."
+    },
+    "runArgs": [
+        "--net=host",
+        "--device=/dev/dxg",
+        "-v", "/usr/lib/wsl:/usr/lib/wsl",
+        "-v", "/mnt/wslg:/mnt/wslg",
+        "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+        "--name", "ros_dev_vscode"
+    ],
+    "containerEnv": {
+        "DISPLAY": "${localEnv:DISPLAY}",
+        "WAYLAND_DISPLAY": "${localEnv:WAYLAND_DISPLAY}",
+        "XDG_RUNTIME_DIR": "/mnt/wslg/runtime-dir",
+        "PULSE_SERVER": "unix:/mnt/wslg/PulseServer"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-python.python",
+                "ms-iot.vscode-ros",
+                "redhat.vscode-xml"
+            ]
+        }
+    },
+    "postCreateCommand": "bash setup_workspace.sh",
+    "remoteUser": "root"
+}
