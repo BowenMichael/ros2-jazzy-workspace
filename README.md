@@ -50,6 +50,12 @@ This repository tracks my journey from ROS 2 fundamentals to advanced robotic co
 - [ ] **MoveIt 2 Integration:** Implement advanced path planning and collision avoidance using the MoveIt 2 library.
 - [ ] **Complex Task Execution:** Automate pick-and-place or trajectory following in a cluttered environment.
 
+### 🏁 Phase 5: Autonomous Racing & AI
+- [ ] **Simulation Environment:** Set up a high-fidelity racetrack simulator (e.g., F1TENTH or Gazebo-based race environment).
+- [ ] **Perception Pipeline:** Implement camera/LiDAR data processing for track detection.
+- [ ] **AI Training:** Implement Reinforcement Learning (RL) or Behavior Cloning to train a race car agent.
+- [ ] **Autonomous Racing:** Deploy the trained model to navigate the track optimally.
+
 ---
 
 ## 📦 Workspace & Packages
