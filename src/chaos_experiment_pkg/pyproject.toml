@@ -1,19 +1,20 @@
-[project]
-name = "chaos-experiment-pkg"
+[tool.poetry]
+name = "chaos_experiment_pkg"
 version = "0.1.0"
-description = ""
-authors = [
-    {name = "BowenMichael",email = "michael@thebowenfamily.com"}
-]
-requires-python = ">=3.12"
-dependencies = [
-    "pandas (>=3.0.1,<4.0.0)",
-    "matplotlib (>=3.10.8,<4.0.0)",
-    "rosbags (>=0.11.0,<0.12.0)",
-    "numpy (>=2.4.3,<3.0.0)"
-]
+description = "Experiment package for chaos testing"
+authors = ["BowenMichael <michael@thebowenfamily.com>"]
+license = "Apache-2.0"
 
+[tool.poetry.dependencies]
+python = ">=3.12"
+pandas = ">=3.0.1"
+matplotlib = ">=3.10.8"
+rosbags = ">=0.11.0"
+numpy = ">=2.4.3"
+
+[tool.poetry.scripts]
+data_logger = "chaos_experiment_pkg.data_logger:main"
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
