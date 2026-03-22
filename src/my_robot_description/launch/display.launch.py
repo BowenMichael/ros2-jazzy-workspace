@@ -10,7 +10,7 @@ def generate_launch_description():
     pkg_name = 'my_robot_description'
     
     # Path to your URDF file
-    urdf_file_path = os.path.join(get_package_share_directory(pkg_name), 'urdf', 'two_links.urdf')
+    urdf_file_path = os.path.join(get_package_share_directory(pkg_name), 'urdf', 'm4_pendulum.urdf')
     
     # Process URDF with xacro
     robot_description_config = xacro.process_file(urdf_file_path)
@@ -48,7 +48,7 @@ def generate_launch_description():
         PythonLaunchDescriptionSource([
             os.path.join(get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py')
         ]),
-        launch_arguments={'gz_args': '-r empty.sdf'}.items()
+        launch_arguments={'gz_args': ' empty.sdf'}.items() # The '-r' flag means "Run Immediately". Remove it to start paused!
     )
 
     # 5. Spawn Robot in Gazebo
@@ -59,7 +59,7 @@ def generate_launch_description():
         arguments=[
             '-topic', 'robot_description',
             '-name', 'my_robot',
-            '-z', '5.0'  # Spawning at 5 meters height!
+            '-z', '0.0'  # The model itself is already anchored at 2.0m in the URDF
         ]
     )
 

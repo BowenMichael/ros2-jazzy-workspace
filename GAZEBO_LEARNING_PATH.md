@@ -24,11 +24,11 @@ This guide breaks down the complex world of ROS 2 simulation into achievable mil
 - [ ] Watch the object fall due to gravity.
 - **Concepts:** Physics, Mass, Inertia, Friction.
 
-## 📍 Milestone 4: The Single Pendulum
+## 📍 Milestone 4: The Single Pendulum (Complete)
 **Goal:** A controlled simulation.
-- [ ] Add a "base" link fixed to the world.
-- [ ] Add a Gazebo plugin to the URDF.
-- [ ] Observe the pendulum swinging naturally.
+- [x] Add a "base" link fixed to the world.
+- [x] Add a Gazebo plugin to the URDF (Deferred to Phase 3).
+- [x] Observe the pendulum swinging naturally.
 - **Concepts:** Gazebo Plugins, ROS-GZ Bridge, URDF vs SDF.
 
 ---

@@ -46,7 +46,11 @@ If you want to run things manually (for debugging):
 **Solution:** 
 - Change **Fixed Frame** from `map` to `base_link`.
 - Ensure the **RobotModel** display is added.
-- Verify the `/robot_description` topic is active using `ros2 topic list`.
+### 4. Pendulum Not Swinging (Physics Frozen)
+**Problem:** The arm spawns at 90 degrees but stays frozen in mid-air, even when "Play" is pressed.
+**Cause:** The **Axis of Rotation** was aligned with gravity (e.g., trying to rotate around Z while gravity pulls down Z).
+**Solution:** Changed the joint axis to `1 0 0` (X-axis) or `0 1 0` (Y-axis) so gravity can exert torque on the arm.
+**Tip:** Use `<dynamics damping="0.1" friction="0.05"/>` to make the motion realistic.
 
 ---
 
@@ -54,3 +58,4 @@ If you want to run things manually (for debugging):
 - `urdf/my_robot.urdf`: **Milestone 1** - Simple floating box (Visuals only).
 - `urdf/two_links.urdf`: **Milestone 2** - Base box with a rotating cylinder arm (Visuals only).
 - `urdf/m3_drop_test.urdf`: **Milestone 3** - Added `<inertial>` and `<collision>` tags for physical simulation in Gazebo.
+- `urdf/m4_pendulum.urdf`: **Milestone 4** - Anchored to the `world` to allow natural swinging under gravity.
