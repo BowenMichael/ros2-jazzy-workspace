@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot name="two_link_robot">
+
+  <!-- The Base Box -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.6 0.4 0.2"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- The Moving Arm -->
+  <link name="arm_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.5"/>
+      </geometry>
+      <material name="green">
+        <color rgba="0 1 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- The Joint connecting Base and Arm -->
+  <joint name="base_to_arm" type="continuous">
+    <parent link="base_link"/>
+    <child link="arm_link"/>
+    <axis xyz="0 0 1"/> <!-- Rotate around Z-axis -->
+    <origin xyz="0 0 0.1"/> <!-- Shift arm 0.1m up from base center -->
+  </joint>
+
+</robot>

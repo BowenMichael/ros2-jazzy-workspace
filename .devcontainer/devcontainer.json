@@ -13,7 +13,7 @@
         "-v", "/usr/lib/wsl:/usr/lib/wsl", // Mount WSL2 drivers for GPU
         "-v", "/mnt/wslg:/mnt/wslg",       // Mount WSLg for GUI (X11/Wayland) support
         "-v", "/tmp/.X11-unix:/tmp/.X11-unix", // Mount X Server socket for graphics
-        "--name", "ros_dev_vscode"      // Set a static name for the container
+        "--name", "ros2-jazzy-gpu"      // Set a static name for the container
     ],
     
     // Environment variables needed for WSLg graphics and audio

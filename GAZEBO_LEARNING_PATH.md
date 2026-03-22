@@ -4,16 +4,16 @@ This guide breaks down the complex world of ROS 2 simulation into achievable mil
 
 ---
 
-## 📍 Milestone 1: The Floating Box
+## 📍 Milestone 1: The Floating Box (Complete)
 **Goal:** Create a URDF and see it in RViz.
-- [ ] Create `my_robot_description` package.
-- [ ] Write a basic `.urdf` file with a single `<link>`.
-- [ ] Launch RViz and visualize the 3D shape.
+- [x] Create `my_robot_description` package.
+- [x] Write a basic `.urdf` file with a single `<link>`.
+- [x] Launch RViz and visualize the 3D shape.
 - **Concepts:** `<link>`, `<visual>`, `<geometry>`, `<mesh>`.
 
-## 📍 Milestone 2: The Hinge
+## 📍 Milestone 2: The Hinge (In Progress)
 **Goal:** Connect two links and move them manually.
-- [ ] Add a second link and a `<joint>`.
+- [x] Add a second link and a `<joint>`.
 - [ ] Use `joint_state_publisher_gui` to rotate the joint.
 - **Concepts:** `<joint>`, `revolute` vs `fixed`, `<axis>`, `<origin>`.
 
