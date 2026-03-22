@@ -1,5 +1,7 @@
 # ROS 2 Jazzy Development Environment (AMD GPU + WSLg)
 
+> **🤖 AI Disclaimer:** This repository, including the Python code, Docker configuration, and documentation, was developed with the assistance of an AI coding agent (Gemini CLI). While the AI provided technical implementation details, the architectural design, testing, and validation were directed by the human author.
+
 ## 🛠 System Requirements
 - **Host:** Windows 11 with WSL2 (Ubuntu 22.04 or 24.04).
 - **GPU:** AMD Radeon (RX 580) via `/dev/dxg` passthrough.

@@ -9,9 +9,8 @@ import xacro
 def generate_launch_description():
     pkg_name = 'my_robot_description'
     
-    # Path to your URDF file
-    urdf_file_path = os.path.join(get_package_share_directory(pkg_name), 'urdf', 'double_pendulum.urdf')
-
+    # Path to your Experiment URDF file
+    urdf_file_path = os.path.join(get_package_share_directory(pkg_name), 'urdf', 'chaos_experiment.urdf')
     
     # Process URDF with xacro
     robot_description_config = xacro.process_file(urdf_file_path)
@@ -29,11 +28,8 @@ def generate_launch_description():
     )
 
     # 2. Joint State Publisher GUI Node
-    node_joint_state_publisher_gui = Node(
-        package='joint_state_publisher_gui',
-        executable='joint_state_publisher_gui',
-        output='screen'
-    )
+    # (Optional: Can be removed since Gazebo will now publish joint states via the plugin!)
+    # node_joint_state_publisher_gui = Node(...)
 
     # 3. RViz2 Node
     node_rviz = Node(
@@ -44,12 +40,12 @@ def generate_launch_description():
         arguments=['-d', rviz_config_path]
     )
 
-    # 4. Gazebo Sim Launch (Empty World)
+    # 4. Gazebo Sim Launch (Empty World) - STARTED PAUSED (-r removed)
     node_gazebo_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             os.path.join(get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py')
         ]),
-        launch_arguments={'gz_args': 'empty.sdf'}.items() # The '-r' flag means "Run Immediately". Remove it to start paused!
+        launch_arguments={'gz_args': 'empty.sdf'}.items() 
     )
 
     # 5. Spawn Robot in Gazebo
@@ -59,14 +55,13 @@ def generate_launch_description():
         output='screen',
         arguments=[
             '-topic', 'robot_description',
-            '-name', 'my_robot',
-            '-z', '0.0'  # The model itself is already anchored at 2.0m in the URDF
+            '-name', 'chaos_robot',
+            '-z', '0.0'
         ]
     )
 
     return LaunchDescription([
         node_robot_state_publisher,
-        node_joint_state_publisher_gui,
         node_rviz,
         node_gazebo_sim,
         node_spawn_robot

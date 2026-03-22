@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<robot name="single_pendulum">
+
+  <!-- World Link (Ghost link to fix to the simulator) -->
+  <link name="world"/>
+
+  <!-- Fixed Joint to the world -->
+  <joint name="world_to_base" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 2.0"/> <!-- Fix base 2.0m high in the air -->
+  </joint>
+
+  <!-- The Base Box (The Anchor) -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.2 0.2 0.2"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.2 0.2 0.2"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10.0"/>
+      <inertia ixx="0.066" ixy="0.0" ixz="0.0" iyy="0.066" iyz="0.0" izz="0.066"/>
+    </inertial>
+  </link>
+
+
+
+  <!-- The Moving Arm (The Pendulum) -->
+  <link name="arm_link">
+    <visual>
+      <origin xyz="0 0 -0.25"/> <!-- Visual shift to swing from top -->
+      <geometry>
+        <cylinder radius="0.02" length="0.5"/>
+      </geometry>
+      <material name="green">
+        <color rgba="0 1 0 1"/>
+      </material>
+    </visual>
+    <!-- Physics: Collision (Restored after debugging) -->
+    <collision>
+      <origin xyz="0 0 -0.25"/>
+      <geometry>
+        <cylinder radius="0.02" length="0.5"/>
+      </geometry>
+    </collision>
+    <!-- Physics: Inertia -->
+    <inertial>
+      <origin xyz="0 0 -0.25"/>
+      <mass value="1.0"/>
+      <inertia ixx="0.021" ixy="0.0" ixz="0.0" iyy="0.021" iyz="0.0" izz="0.001"/>
+    </inertial>
+    </link>
+
+      <!-- The 2nd Moving Arm (The Pendulum) -->
+  <link name="arm_2_link">
+    <visual>
+      <origin xyz="0 0 -0.25"/> <!-- Visual shift to swing from top -->
+      <geometry>
+        <cylinder radius="0.02" length="0.5"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+    <!-- Physics: Collision (Restored after debugging) -->
+    <collision>
+      <origin xyz="0 0 -0.25"/>
+      <geometry>
+        <cylinder radius="0.02" length="0.5"/>
+      </geometry>
+    </collision>
+    <!-- Physics: Inertia -->
+    <inertial>
+      <origin xyz="0 0 -0.25"/>
+      <mass value="1.0"/>
+      <inertia ixx="0.021" ixy="0.0" ixz="0.0" iyy="0.021" iyz="0.0" izz="0.001"/>
+    </inertial>
+    </link>
+
+    <!-- The Revolute Joint (The Hinge) -->
+    <joint name="pendulum_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="arm_link"/>
+    <!-- 
+      CRITICAL: Axis of Rotation 
+      Must be perpendicular to gravity (Z-axis) for the pendulum to swing.
+      - 1 0 0 (X-axis): Swings "forward/backward" relative to base.
+      - 0 1 0 (Y-axis): Swings "left/right" relative to base.
+      - 0 0 1 (Z-axis): Cannot swing (aligned with gravity).
+    -->
+    <axis xyz="1 0 0"/> 
+    <origin xyz="0 0 0" rpy="1.57 0 0"/> <!-- Initial tilt for gravity test -->
+    <dynamics damping="0.01" friction="0.01"/> <!-- Reduced friction for longer swing -->
+    </joint>
+
+        <!-- The 2nd Pendulum Joint (The Hinge) -->
+    <joint name="pendulum_2_joint" type="continuous">
+    <parent link="arm_link"/>
+    <child link="arm_2_link"/>
+    <axis xyz="1 0 0"/> 
+    <!-- 
+      CONNECTION POINT:
+      We attach this joint to the END of the first arm.
+      Since arm_link has length 0.5, the end is at z = -0.5.
+      
+      CHAOS FACTOR:
+      We also rotate this joint by 90 degrees (1.57 rad) initially.
+      Now BOTH arms start high up, creating maximum potential energy!
+    -->
+    <origin xyz="0 0 -0.5" rpy="1.57 0 0"/> 
+    <dynamics damping="0.01" friction="0.01"/> <!-- Reduced friction for longer swing -->
+    </joint>
+
+  <!-- EXPERIMENT: Virtual Encoders -->
+  <!-- This plugin publishes the EXACT angle of each joint to /joint_states -->
+  <gazebo>
+    <plugin filename="libgazebo_ros_joint_state_publisher.so" name="joint_state_publisher">
+      <joint_name>pendulum_joint</joint_name>
+      <joint_name>pendulum_2_joint</joint_name>
+      <update_rate>50</update_rate> <!-- 50Hz Data Rate -->
+    </plugin>
+  </gazebo>
+
+</robot>
