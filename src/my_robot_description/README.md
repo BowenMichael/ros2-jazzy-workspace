@@ -50,7 +50,7 @@ If you want to run things manually (for debugging):
 
 ---
 
-## 📂 File Structure
-- `urdf/`: 3D Robot models.
-- `launch/`: Python launch files for automation.
-- `config/`: Saved RViz configuration states.
+## 📂 File Structure (Iterative Progress)
+- `urdf/my_robot.urdf`: **Milestone 1** - Simple floating box (Visuals only).
+- `urdf/two_links.urdf`: **Milestone 2** - Base box with a rotating cylinder arm (Visuals only).
+- `urdf/m3_drop_test.urdf`: **Milestone 3** - Added `<inertial>` and `<collision>` tags for physical simulation in Gazebo.

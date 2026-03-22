@@ -2,6 +2,8 @@ import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch_ros.actions import Node
+from launch.actions import ExecuteProcess, IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 import xacro
 
 def generate_launch_description():
@@ -41,8 +43,30 @@ def generate_launch_description():
         arguments=['-d', rviz_config_path]
     )
 
+    # 4. Gazebo Sim Launch (Empty World)
+    node_gazebo_sim = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([
+            os.path.join(get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py')
+        ]),
+        launch_arguments={'gz_args': '-r empty.sdf'}.items()
+    )
+
+    # 5. Spawn Robot in Gazebo
+    node_spawn_robot = Node(
+        package='ros_gz_sim',
+        executable='create',
+        output='screen',
+        arguments=[
+            '-topic', 'robot_description',
+            '-name', 'my_robot',
+            '-z', '5.0'  # Spawning at 5 meters height!
+        ]
+    )
+
     return LaunchDescription([
         node_robot_state_publisher,
         node_joint_state_publisher_gui,
-        node_rviz
+        node_rviz,
+        node_gazebo_sim,
+        node_spawn_robot
     ])
