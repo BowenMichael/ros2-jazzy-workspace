@@ -31,14 +31,20 @@ A double pendulum is a classic **Chaotic System**, meaning it is highly sensitiv
 
 ## 🗺️ Experiment Roadmap
 
-### Phase 1: Instrumentation (Current)
-- [ ] **Add Gazebo Plugin:** Update `double_pendulum.urdf` to publish `/joint_states`.
-- [ ] **Verify Topics:** Ensure joint angles are streaming to ROS 2.
+### Phase 1: Instrumentation (Complete)
+- [x] **Add Gazebo Plugin:** Added `gz::sim::systems::JointStatePublisher` to `chaos_experiment.urdf`.
+- [x] **Verify Topics:** Confirm streaming with: 
+  `ros2 topic echo /joint_states`
 
-### Phase 2: Data Collection
-- [ ] **Run 1:** Record 30 seconds of `ros2 bag record` (Run A).
-- [ ] **Run 2:** Record 30 seconds of `ros2 bag record` (Run B).
+### Phase 2: Data Collection (Pro Workflow)
+- [x] **Record Run A:** Record 30 seconds of `/joint_states`.
+  `ros2 bag record -o run_a /joint_states`
+- [x] **Record Run B:** Reset Gazebo, then record a second run.
+  `ros2 bag record -o run_b /joint_states`
+- [x] **Inspect Bag Data:** Verify both bag files were created.
+  `ros2 bag info run_a/`
 
-### Phase 3: Analysis
-- [ ] **Visualize:** Use `rqt_plot` or Python to graph Angle vs. Time.
-- [ ] **Compare:** Identify the exact time (t) where the trajectories diverge by > 1 degree.
+### Phase 3: Analysis + automation
+- [x] **Automate:** created a reliable automated test by starting gazebo automatically with -r
+- [x] **Visualize:** Use matplotlib to plot the signals and measure the diverages
+- [x] **Compare:** Compared angle graphs to see that the simulation is very repeatable and deterministic with the same inital conditions

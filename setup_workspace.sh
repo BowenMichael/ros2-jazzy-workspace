@@ -19,4 +19,7 @@ if ! grep -q "source $WORKSPACE_DIR/install/setup.bash" ~/.bashrc; then
     echo "Successfully added workspace sourcing to .bashrc"
 fi
 
+# Explicitly source in the current session
+source $WORKSPACE_DIR/install/setup.bash
+
 echo "Workspace build complete! Open a new terminal to start using your packages."
