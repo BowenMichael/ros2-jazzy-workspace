@@ -64,23 +64,22 @@ This repository tracks my journey from ROS 2 fundamentals to advanced robotic co
 
 ### Packages
 - **my_robot_controller**: A Python package containing basic ROS 2 nodes.
-    - `test_node`: A simple node that logs "Hello ROS2!" and has a 1-second timer callback.
+    - `turtle_controller`: Complex node using publishers, subscribers, and services to control turtlesim.
+- **my_robot_description**: A simulation-focused package for robot modeling.
+    - `two_links.urdf`: A 3D model with a rotating joint for testing simulation logic.
+    - `display.launch.py`: Automated launch for RViz, Robot State Publisher, and Joint State Publisher GUI.
 
 ### Building the Workspace
 Inside the container, run:
 ```bash
-colcon build --packages-select my_robot_controller
+colcon build --symlink-install
+source install/setup.bash
 ```
 
-### Running the Node
-1. **Source the workspace:**
-   ```bash
-   source install/setup.bash
-   ```
-2. **Run the test node:**
-   ```bash
-   ros2 run my_robot_controller test_node
-   ```
+### Running a Simulation
+```bash
+ros2 launch my_robot_description display.launch.py
+```
 
 ### Setup Scripts
 1. **`run_ros.sh`**: Starts the Docker container with GPU support.
