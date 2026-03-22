@@ -41,7 +41,7 @@ This repository tracks my journey from ROS 2 fundamentals to advanced robotic co
 - [ ] Create and use Launch Files (Deferred)
 
 ### 🟡 Phase 2: Dynamic Systems & Control (Current)
-- [ ] **Double Pendulum Simulation:** Create a URDF model for a double pendulum in Gazebo.
+- [x] **Double Pendulum Simulation:** Create a URDF model for a double pendulum in Gazebo. [Chaos experiment](src/chaos_experiment_pkg/CHAOS_EXPERIMENT.md)
 - [ ] **PID Control:** Implement a custom PID controller node to balance or track trajectories.
 - [ ] **Status:** Starting URDF modeling.
 
