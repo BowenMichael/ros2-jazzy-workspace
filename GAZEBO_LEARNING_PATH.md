@@ -11,10 +11,10 @@ This guide breaks down the complex world of ROS 2 simulation into achievable mil
 - [x] Launch RViz and visualize the 3D shape.
 - **Concepts:** `<link>`, `<visual>`, `<geometry>`, `<mesh>`.
 
-## 📍 Milestone 2: The Hinge (In Progress)
+## 📍 Milestone 2: The Hinge (Complete)
 **Goal:** Connect two links and move them manually.
 - [x] Add a second link and a `<joint>`.
-- [ ] Use `joint_state_publisher_gui` to rotate the joint.
+- [x] Use `joint_state_publisher_gui` to rotate the joint.
 - **Concepts:** `<joint>`, `revolute` vs `fixed`, `<axis>`, `<origin>`.
 
 ## 📍 Milestone 3: The "Drop Test"

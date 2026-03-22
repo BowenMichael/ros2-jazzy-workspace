@@ -6,23 +6,26 @@ This package contains the **URDF** (Unified Robot Description Format) models for
 
 ## 🚀 How to Visualize a Robot
 
-To see a robot model in RViz2, follow this "Two-Step" command pattern to avoid terminal parsing errors.
+### Option 1: Automatic Launch (Recommended)
+This single command starts the `robot_state_publisher`, the `joint_state_publisher_gui`, and `rviz2` with your saved configuration.
 
-### 1. Load the URDF into a variable
 ```bash
-MY_URDF=$(xacro src/my_robot_description/urdf/my_robot.urdf)
+ros2 launch my_robot_description display.launch.py
 ```
 
-### 2. Start the Publisher
-```bash
-ros2 run robot_state_publisher robot_state_publisher --ros-args -p robot_description:="$MY_URDF"
-```
+### Option 2: Manual Visualization
+If you want to run things manually (for debugging):
+1. **Load URDF:** `MY_URDF=$(xacro src/my_robot_description/urdf/two_links.urdf)`
+2. **Start Publisher:** `ros2 run robot_state_publisher robot_state_publisher --ros-args -p robot_description:="$MY_URDF"`
+3. **Open RViz:** `rviz2`
 
-### 3. Open RViz2 (In a new terminal)
-```bash
-rviz2
-```
-*Note: In RViz, you must change the **Fixed Frame** to `base_link` and add the **RobotModel** display.*
+---
+
+## 🎨 Saving Your Workspace State
+1. Open RViz and configure your displays (Fixed Frame, RobotModel, TF).
+2. Go to **File > Save Config As**.
+3. Save to: `src/my_robot_description/config/view_robot.rviz`.
+4. The launch file will now automatically load this state every time!
 
 ---
 
@@ -48,5 +51,6 @@ rviz2
 ---
 
 ## 📂 File Structure
-- `urdf/my_robot.urdf`: Milestone 1 - Simple floating box.
-- `urdf/two_links.urdf`: Milestone 2 - Base box with a rotating cylinder arm.
+- `urdf/`: 3D Robot models.
+- `launch/`: Python launch files for automation.
+- `config/`: Saved RViz configuration states.
