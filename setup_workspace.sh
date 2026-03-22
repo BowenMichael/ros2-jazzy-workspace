@@ -1,17 +1,22 @@
 #!/bin/bash
 
-# Go to our workspace
-cd /home/ros_ws
+# Define the workspace directory inside the container
+WORKSPACE_DIR="/home/ros_ws"
+cd $WORKSPACE_DIR
 
-# Create src if it doesn't exist
+# 1. Ensure the source directory exists
 mkdir -p src
 
-# Build the workspace
+# 2. Build the entire workspace using colcon
+# This creates the 'build', 'install', and 'log' directories
 colcon build
 
-# Add the local source to the .bashrc so we don't have to type it every time
-if ! grep -q "source /home/ros_ws/install/setup.bash" ~/.bashrc; then
-    echo "source /home/ros_ws/install/setup.bash" >> ~/.bashrc
+# 3. Automatic Sourcing (The "Quality of Life" step)
+# This adds a line to your .bashrc so that every new terminal automatically
+# knows about your local packages (source install/setup.bash)
+if ! grep -q "source $WORKSPACE_DIR/install/setup.bash" ~/.bashrc; then
+    echo "source $WORKSPACE_DIR/install/setup.bash" >> ~/.bashrc
+    echo "Successfully added workspace sourcing to .bashrc"
 fi
 
-echo "Workspace built and sourced!"
+echo "Workspace build complete! Open a new terminal to start using your packages."

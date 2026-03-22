@@ -1,9 +1,13 @@
 FROM osrf/ros:jazzy-desktop
 
-# Install basic GUI dependencies
+# Install basic GUI and Gazebo dependencies
 RUN apt-get update && apt-get install -y \
     mesa-utils \
+    ros-jazzy-ros-gz \
+    ros-jazzy-xacro \
     && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y ros-jazzy-rviz2 && rm -rf /var/lib/apt/lists/*
 
 # Set up the same environment variables WSLg uses
 ENV DISPLAY=:0

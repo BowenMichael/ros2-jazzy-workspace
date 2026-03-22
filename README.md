@@ -29,18 +29,19 @@
 
 This repository tracks my journey from ROS 2 fundamentals to advanced robotic control systems.
 
-### 🟢 Phase 1: ROS 2 Fundamentals (Current)
+### 🟢 Phase 1: ROS 2 Fundamentals (Paused)
 *Based on [Robotics Back-end](https://www.youtube.com/watch?v=od3JwOeyEXc) tutorials.*
 - [x] Environment Setup (Docker + GPU + WSLg)
 - [x] Create first ROS 2 Node (Python)
-- [ ] Implement Publishers/Subscribers
-- [ ] Work with Services and Custom Interfaces
-- [ ] Understand Parameters and Launch Files
-- [ ] **Current Status:** Completed #8 (Topics/Publishers)
+- [x] Implement Publishers/Subscribers
+- [x] Work with Services (e.g., `SetPen`)
+- [ ] Understand Parameters (Deferred)
+- [ ] Create and use Launch Files (Deferred)
 
-### 🟡 Phase 2: Dynamic Systems & Control
+### 🟡 Phase 2: Dynamic Systems & Control (Current)
 - [ ] **Double Pendulum Simulation:** Create a URDF model for a double pendulum in Gazebo.
 - [ ] **PID Control:** Implement a custom PID controller node to balance or track trajectories.
+- [ ] **Status:** Starting URDF modeling.
 
 ### 🔴 Phase 3: Robotic Manipulation
 - [ ] **6-Axis Arm Control:** Develop a simulation for a 6-axis industrial robot arm.
