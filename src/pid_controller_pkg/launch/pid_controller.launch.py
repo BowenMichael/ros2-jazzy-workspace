@@ -64,17 +64,17 @@ def generate_launch_description():
         executable='parameter_bridge',
         output='screen',
         arguments=[
-            # Topic @ ROS Type [ Gazebo Type (Source is Gazebo)
             '/joint_states@sensor_msgs/msg/JointState[ignition.msgs.Model',
-            '/tf@tf2_msgs/msg/TFMessage[ignition.msgs.PoseV',
+            '/tf@tf2_msgs/msg/TFMessage[ignition.msgs.Pose_V',
             '/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock',
-            # Topic @ ROS Type ] Gazebo Type (Source is ROS - for commands)
-            '/slider_cmd@std_msgs/msg/Float64]ignition.msgs.Double'
+            # Bridge ROS /slider_cmd to the specific Gazebo joint force topic
+            '/model/chaos_robot/joint/slider_joint/cmd_force@std_msgs/msg/Float64@ignition.msgs.Double'
+        ],
+        remappings=[
+            ('/model/chaos_robot/joint/slider_joint/cmd_force', '/slider_cmd')
         ]
     )
 
-    # PID Controller Node 
-    # node_pid_controller = Node(
     #     package='pid_controller_pkg',
     #     executable='pid_controller',
     #     output='screen'
