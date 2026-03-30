@@ -1,7 +1,6 @@
+from setuptools import setup
 from glob import glob
 import os
-
-from setuptools import  setup
 
 package_name = 'pid_controller_pkg'
 
@@ -14,7 +13,6 @@ setup(
         ('share/' + package_name, ['package.xml']),
         (os.path.join('share', package_name, 'launch'), glob('launch/*.launch.py')),
         (os.path.join('share', package_name, 'urdf'), glob('urdf/*.urdf')),
-
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -23,6 +21,4 @@ setup(
             'pid_controller = pid_controller_pkg.pid_controller:main'
         ],
     },
-    # REMOVED: description, license, maintainer, and scripts.
-    # These are now read from pyproject.toml automatically.
 )
