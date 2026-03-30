@@ -11,8 +11,8 @@ class PIDController(Node):
         # 1. Parameters (Tunable via ROS 2 CLI or YAML)
         self.declare_parameter('kp', 10.0)
         self.declare_parameter('ki', 0.0)
-        self.declare_parameter('kd', 1.0)
-        self.declare_parameter('setpoint', 0.0)
+        self.declare_parameter('kd', 0)
+        self.declare_parameter('setpoint', 1)
         self.declare_parameter('loop_rate', 50.0)  # Hz
 
         # 2. Internal State
@@ -41,13 +41,21 @@ class PIDController(Node):
 
         self.get_logger().info("PID Controller Node has been initialized.")
 
-    def joint_state_callback(self, msg: JointState):
+    def joint_state_callback(self, msg):
+        """Callback for joint states. Type hint removed to avoid pybind11 conversion issues."""
+        if not msg or not hasattr(msg, 'name'):
+            return
+
         # Find the slider_joint index
         try:
-            idx = msg.name.index('slider_joint')
-            self.current_pos = msg.position[idx]
-        except ValueError:
-            pass
+            # Check if name list exists and contains our joint
+            if 'slider_joint' in msg.name:
+                idx = msg.name.index('slider_joint')
+                # Ensure the position array is long enough
+                if len(msg.position) > idx:
+                    self.current_pos = msg.position[idx]
+        except Exception as e:
+            self.get_logger().debug(f"Error in joint_state_callback: {e}")
 
     def control_loop(self):
         current_time = self.get_clock().now()
@@ -100,11 +108,12 @@ def main(args=None):
     node = PIDController()
     try:
         rclpy.spin(node)
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, rclpy.executors.ExternalShutdownException):
         pass
     finally:
-        node.destroy_node()
-        rclpy.shutdown()
+        if rclpy.ok():
+            node.destroy_node()
+            rclpy.shutdown()
     
 if __name__ == '__main__':
     main()
