@@ -1,0 +1,155 @@
+<sdf version='1.11'>
+  <model name='single_pendulum_balancer'>
+    <joint name='world_to_rail' type='fixed'>
+      <pose relative_to='__model__'>0 0 2 0 0 0</pose>
+      <parent>world</parent>
+      <child>rail_link</child>
+    </joint>
+    <link name='rail_link'>
+      <pose relative_to='world_to_rail'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>10</mass>
+        <inertia>
+          <ixx>0.10000000000000001</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.10000000000000001</iyy>
+          <iyz>0</iyz>
+          <izz>0.10000000000000001</izz>
+        </inertia>
+      </inertial>
+      <visual name='rail_link_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.050000000000000003 4 0.050000000000000003</size>
+          </box>
+        </geometry>
+        <material>
+          <diffuse>0.625 0.625 0.625 1</diffuse>
+          <ambient>0.625 0.625 0.625 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name='slider_joint' type='prismatic'>
+      <pose relative_to='rail_link'>0 0 0 0 0 0</pose>
+      <parent>rail_link</parent>
+      <child>base_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1.5</lower>
+          <upper>1.5</upper>
+          <effort>1000</effort>
+          <velocity>2</velocity>
+        </limit>
+        <dynamics>
+          <damping>0</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='base_link'>
+      <pose relative_to='slider_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>2</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.01</iyy>
+          <iyz>0</iyz>
+          <izz>0.01</izz>
+        </inertia>
+      </inertial>
+      <collision name='base_link_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.20000000000000001 0.20000000000000001 0.20000000000000001</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='base_link_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.20000000000000001 0.20000000000000001 0.20000000000000001</size>
+          </box>
+        </geometry>
+        <material>
+          <diffuse>0 0 1 1</diffuse>
+          <ambient>0 0 1 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name='pendulum_joint' type='revolute'>
+      <pose relative_to='base_link'>0 0 0 -3.1331853071795872 0 0</pose>
+      <parent>base_link</parent>
+      <child>arm_link</child>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <damping>0.01</damping>
+          <friction>0.01</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='arm_link'>
+      <pose relative_to='pendulum_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 -0.25 0 0 0</pose>
+        <mass>1</mass>
+        <inertia>
+          <ixx>0.021000000000000001</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.021000000000000001</iyy>
+          <iyz>0</iyz>
+          <izz>0.001</izz>
+        </inertia>
+      </inertial>
+      <collision name='arm_link_collision'>
+        <pose>0 0 -0.25 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.5</length>
+            <radius>0.02</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='arm_link_visual'>
+        <pose>0 0 -0.25 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.5</length>
+            <radius>0.02</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <diffuse>0 1 0 1</diffuse>
+          <ambient>0 1 0 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <plugin name='gz::sim::systems::JointStatePublisher' filename='gz-sim-joint-state-publisher-system'>
+      <joint_name>slider_joint</joint_name>
+      <joint_name>pendulum_joint</joint_name>
+      <update_rate>50</update_rate>
+      <topic>/joint_states</topic>
+    </plugin>
+    <plugin name='gz::sim::systems::ApplyJointForce' filename='gz-sim-apply-joint-force-system'>
+      <joint_name>slider_joint</joint_name>
+    </plugin>
+  </model>
+</sdf>

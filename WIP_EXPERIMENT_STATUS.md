@@ -5,22 +5,22 @@ This file tracks the transition from physics analysis to active robotic control.
 ---
 
 ## ✅ Completed Recently
-1.  **Chaos Experiment:** Successfully proved determinism in Gazebo via automated MCAP recordings and Python analysis.
-2.  **PID Setup:** Created `pid_controller_pkg` and successfully established a bridge between ROS 2 `/slider_cmd` and Gazebo's `ApplyJointForce` plugin.
-3.  **1D Control:** Confirmed the blue base can move along the rail via manual force commands and basic PID logic.
-4.  **Roadmap:** Created `CONTROL_ROADMAP.md` to track Stage 1-5 of the control evolution.
+1.  **Universal PID Node:** Upgraded the controller to be joint-agnostic with dynamic setpoints and multi-input (Pos/Vel) support.
+2.  **Robust Simulation:** Successfully "baked" the robot into a custom Gazebo world (`pid_balancer.sdf`) to solve the "vanish on reset" issue.
+3.  **PID Safeguards:** Implemented `dt` capping and effort saturation to handle simulation lag and prevent "math explosions."
+4.  **Lab Curriculum:** Created `ADVANCED_CONTROL_LAB.md` to track the modular cascaded control roadmap.
 
 ## ⏸️ Current Status
--   **Stage 1 (1D Linear Control):** The PID loop is active but currently oscillating ("yo-yoing"). 
--   **Tuning needed:** Current gains are `kp=10.0`, `ki=0.0`, `kd=1.0`. High overshoot detected.
+-   **Stage 2 (Cascaded Control):** Architecture is implemented (Angle -> Velocity -> Force), but stability and communication issues with the linear slide were encountered.
+-   **Strategic Decision:** The linear slide (Cart-Pole) adds significant complexity. We are moving to a **Fixed-Base Single Pendulum** for the next session to master basic 1D angular control before returning to the mobile base.
 
 ## ⏭️ Next Steps
-1.  **Tune Stage 1:** Stabilize the slider joint by increasing `kd` (D-gain) to dampen oscillations.
-2.  **Implement Stage 2:** Add force control to the first pendulum joint (`pendulum_joint`) to begin angular control.
-3.  **Refactor:** Add a GUI (rqt_configure) to make setpoint changes easier during tuning.
+1.  **Simpler Model:** Create a URDF/SDF for a pendulum arm mounted to a fixed point in space.
+2.  **1D Tuning:** Use the universal PID node to hold the fixed pendulum at a set angle against gravity.
+3.  **Re-Integrate Slide:** Once 1D angular control is rock-solid, re-introduce the linear slide for the full balancing challenge.
 
 ---
 
 ## 📝 Notes
--   The bridge for the slider is: `/model/chaos_robot/joint/slider_joint/cmd_force` remapped to `/slider_cmd`.
--   Remember to unpause Gazebo before testing PID!
+-   The current "Baked-In" setup is working perfectly for rapid world resets.
+-   Disabling Shared Memory (SHM) via `fastdds_noshm.xml` fixed the persistent `RuntimeError` in the PID node.
